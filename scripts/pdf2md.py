@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Copyright (C) 2026 jkjkiiiii
+# SPDX-License-Identifier: GPL-3.0-or-later
+# 本程序为自由软件：可依 GPL-3.0 或更高版本条款再发布或修改，详见 LICENSE。
 """PDF -> Markdown 批量转换（MinerU HTTP API，远程服务固定映射到本地 8008 端口）。
 
 调用链（复用已验证流程）：

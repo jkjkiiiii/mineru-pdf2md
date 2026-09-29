@@ -1,3 +1,6 @@
+# Copyright (C) 2026 jkjkiiiii
+# SPDX-License-Identifier: GPL-3.0-or-later
+# 本程序为自由软件：可依 GPL-3.0 或更高版本条款再发布或修改，详见 LICENSE。
 """MinerU 服务可达性保障：端口健康检查 + SSH 端口映射。
 
 设计要点：

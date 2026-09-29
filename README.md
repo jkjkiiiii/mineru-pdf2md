@@ -14,16 +14,18 @@
 - **输出可控**：默认与源 PDF 同目录同名 `.md`，也可统一输出到指定目录；同名自动消歧
 - 零框架依赖，仅依赖 `httpx`；环境用 `uv` 管理
 
+> 许可协议：**GPL-3.0**（强 copyleft，衍生作品需同样开源）。详见 [License](#license)。
+
 ## 技术栈
 
-| 项 | 选择 |
-| --- | --- |
-| 语言 | Python 3.12（3.9+ 亦可） |
-| HTTP 客户端 | `httpx`（异步 `AsyncClient`；同步场景可用 `requests` 替代） |
-| 并发 | `asyncio` + `asyncio.Semaphore` |
-| 环境/依赖管理 | `uv`（`uv venv` + `uv pip install`） |
-| 远程通道 | OpenSSH 本地端口映射（`ssh -N -L`） |
-| 解析引擎 | MinerU HTTP API v1（`/v1/uploads`、`/v1/parse/jobs`、`/v1/files`） |
+| 项        | 选择                                                             |
+| -------- | -------------------------------------------------------------- |
+| 语言       | Python 3.12（3.9+ 亦可）                                           |
+| HTTP 客户端 | `httpx`（异步 `AsyncClient`；同步场景可用 `requests` 替代）                 |
+| 并发       | `asyncio` + `asyncio.Semaphore`                                |
+| 环境/依赖管理  | `uv`（`uv venv` + `uv pip install`）                             |
+| 远程通道     | OpenSSH 本地端口映射（`ssh -N -L`）                                    |
+| 解析引擎     | MinerU HTTP API v1（`/v1/uploads`、`/v1/parse/jobs`、`/v1/files`） |
 
 ## 目录结构
 
@@ -114,19 +116,19 @@ PY=.venv/Scripts/python.exe      # Windows；macOS/Linux 用 .venv/bin/python
 "$PY" scripts/pdf2md.py paper.pdf -v          # 打印每个文件的分步进度
 ```
 
-常用参数：`-d/--output-dir`、`-o/--output`（仅单文件）、`--tier`、`--ocr-mode`、
+常用参数：`-d/--output-dir`、`-o/--output`（仅单文件）、`--tier`、`--ocr-mode`、  
 `--page-range`、`--concurrency`、`--config`、`--no-tunnel`、`--set-remote`、`--json`、`-q`、`-v`。
 
 ## 服务可达性流程
 
 1. 请求 `http://127.0.0.1:8008/v1/health`，200 且 `status=ok` 视为健康；
 2. 已健康 → 直接复用，**不重复建立 SSH 映射**；
-3. 不健康 → 读 `config.json` 的 `ssh.host`/`ssh.user`，后台执行
-   `ssh -N -o ExitOnForwardFailure=yes -L 8008:127.0.0.1:<remote_port> -p <ssh_port> <user>@<host>`，
+3. 不健康 → 读 `config.json` 的 `ssh.host`/`ssh.user`，后台执行  
+   `ssh -N -o ExitOnForwardFailure=yes -L 8008:127.0.0.1:<remote_port> -p <ssh_port> <user>@<host>`，  
    轮询至健康检查通过；配置缺失则提示补充后退出；
 4. 无论哪条路径，最后再检查一次端口；仍失败则打印排查清单并以退出码 3 退出。
 
-排查清单包括：远程服务是否在监听、SSH 是否可免密登录、本地端口是否被占用、
+排查清单包括：远程服务是否在监听、SSH 是否可免密登录、本地端口是否被占用、  
 `curl --noproxy '*' http://127.0.0.1:8008/v1/health` 手动验证。
 
 ## 输出规则
@@ -138,11 +140,11 @@ PY=.venv/Scripts/python.exe      # Windows；macOS/Linux 用 .venv/bin/python
 
 ## 退出码
 
-| 码 | 含义 |
-| --- | --- |
-| 0 | 全部成功 |
+| 码 | 含义                |
+| - | ----------------- |
+| 0 | 全部成功              |
 | 1 | 至少一个文件转换失败（明细已打印） |
-| 2 | 用法错误或缺少 SSH 配置 |
+| 2 | 用法错误或缺少 SSH 配置    |
 | 3 | 端口健康检查最终失败（服务不可达） |
 
 ## 常见问题
@@ -154,4 +156,4 @@ PY=.venv/Scripts/python.exe      # Windows；macOS/Linux 用 .venv/bin/python
 
 ## License
 
-[MIT](LICENSE) © 2026 jkjkiiiii
+本项目采用 **GPL-3.0**（[GNU General Public License v3.0](LICENSE)）© 2026 jkjkiiiii。
