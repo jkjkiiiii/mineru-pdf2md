@@ -1,0 +1,42 @@
+{
+  "service": {
+    "local_port": 8008,
+    "host": "127.0.0.1",
+    "health_path": "/v1/health",
+    "health_timeout_seconds": 3.0,
+    "tunnel_wait_seconds": 25,
+    "connect_timeout_seconds": 10,
+    "_comment": "MinerU 远程服务固定映射到本地端口 8008，接口文档见 http://localhost:8008/docs#/"
+  },
+  "ssh": {
+    "host": "",
+    "user": "",
+    "port": 22,
+    "remote_bind_host": "127.0.0.1",
+    "remote_port": 8008,
+    "identity_file": "",
+    "extra_args": [],
+    "batch_mode": true,
+    "log_file": "",
+    "connect_timeout_seconds": 10,
+    "_comment": "TODO: 用户请填写 host 与 user（其余保持默认即可）。也可执行 scripts/pdf2md.py --set-remote <IP> <用户名> 自动写入本文件。"
+  },
+  "parse": {
+    "tier": "advanced",
+    "ocr_mode": "auto",
+    "output_formats": [
+      "markdown"
+    ],
+    "page_range": "all",
+    "poll_interval_seconds": 2,
+    "job_timeout_seconds": 1800,
+    "_comment": "tier 可选 flash / basic / standard / advanced，以 /v1/tiers 实际返回为准。"
+  },
+  "output": {
+    "default_output_dir": "",
+    "suffix": ".md",
+    "_comment": "default_output_dir 留空表示与源 PDF 同目录。"
+  },
+  "concurrency": 4,
+  "_comment": "pdf2md skill 配置。所有字段均可被命令行参数覆盖。ssh 段的 host/user 需由用户填写，留空时脚本会提示补充。"
+}

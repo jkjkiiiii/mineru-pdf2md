@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# 虚拟环境（uv / venv / conda）
+.venv/
+venv/
+env/
+
+# 本地工具与缓存目录
+.workbuddy/
+logs/
+*.log
+
+# 转换产物与源文档
+md/
+out/
+*.pdf
+*.md.bak
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
